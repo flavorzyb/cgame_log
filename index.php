@@ -6,8 +6,10 @@ $day    = date('d');
 $time   =date('Y-m-d H:i:s');
 
 $server 	= isset($_POST['server']) ? $_POST['server'] : "";
-$log    	= isset($_POST['log']) ? $_POST['log'] : "";
-$errorlog	= isset($_POST['error_log']) ? $_POST['error_log'] : "";
+$crashlog    = isset($_POST['log']) ? trim($_POST['log']) : "";
+$errorlog	= isset($_POST['error_log']) ? trim($_POST['error_log']) : "";
+
+$log = (strlen($crashlog) > 0 ? $crashlog : $errorlog);
 
 if (($server == "") || ($log == ""))
 {
@@ -28,7 +30,6 @@ if ($isDir == true)
     if (strlen($errorlog) > 0)
     {
         $filePath = $logPath . "/djsg_" .$day . ".error_log";
-		$log = $errorlog;
     }
 
     if (is_file($filePath) && filesize($filePath) > __CONFIG_LOG_MAX_SIZE)
