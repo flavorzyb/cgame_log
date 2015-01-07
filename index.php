@@ -5,9 +5,10 @@ $month  = date('m');
 $day    = date('d');
 $time   =date('Y-m-d H:i:s');
 
-$server 	= isset($_POST['server']) ? $_POST['server'] : "";
-$crashlog    = isset($_POST['log']) ? trim($_POST['log']) : "";
-$errorlog	= isset($_POST['error_log']) ? trim($_POST['error_log']) : "";
+$server 		= isset($_POST['server']) ? trim($_POST['server']) : "";
+$crashlog    	= isset($_POST['log']) ? trim($_POST['log']) : "";
+$errorlog		= isset($_POST['error_log']) ? trim($_POST['error_log']) : "";
+$isDataValidate = isset($_POST['validate']) ? trim($_POST['validate']) : "";
 
 $log = (strlen($crashlog) > 0 ? $crashlog : $errorlog);
 
@@ -30,6 +31,12 @@ if ($isDir == true)
     if (strlen($errorlog) > 0)
     {
         $filePath = $logPath . "/djsg_" .$day . ".error_log";
+    }
+    
+    // 如果是数据验证数据
+    if (strlen($isDataValidate) > 0)
+    {
+    	$filePath = $logPath . "/djsg_" .$day . ".data_log";
     }
 
     if (is_file($filePath) && filesize($filePath) > __CONFIG_LOG_MAX_SIZE)
